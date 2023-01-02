@@ -1,0 +1,44 @@
+import requests
+
+def get_crypto_price(symbol):
+    # Envoie une requête HTTP GET à l'API de CoinMarketCap pour récupérer les données sur la cryptomonnaie
+    response = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
+        headers={'X-CMC_PRO_API_KEY': 'ec307ccc-21b1-4e64-9ec6-95a14482507f'},
+        params={'symbol': symbol}
+    )
+
+    # Si la requête a réussi (code HTTP 200)
+    if response.status_code == 200:
+        # Récupère les données de la réponse sous forme de dictionnaire
+        data = response.json()
+        # Récupère le prix de la cryptomonnaie à partir du dictionnaire
+        crypto_price = data['data'][symbol]['quote']['USD']['price']
+        return crypto_price
+    else:
+        # Si la requête a échoué, renvoie None
+        return None
+
+# Demande à l'utilisateur quelle cryptomonnaie il souhaite acheter
+symbol = input("Entrez le symbole de la cryptomonnaie que vous souhaitez acheter (exemple : BTC) : ")
+
+# Demande à l'utilisateur le prix auquel il souhaite acheter la cryptomonnaie
+price = float(input("Entrez le prix auquel vous souhaitez acheter la cryptomonnaie : "))
+
+# Récupère le prix actuel de la cryptomonnaie
+current_price = get_crypto_price(symbol)
+
+# Calcul la différence entre le prix souhaité et le prix actuel
+difference = price - current_price
+
+# Calcul le pourcentage de différence
+percentage = difference / current_price * 100
+
+# Si le pourcentage est négatif, le convertit en positif
+if percentage < 0:
+    percentage = -percentage
+    direction = "à la baisse"
+else:
+    direction = "à la hausse"
+
+# Affiche le pourcentage de différence
+print(f"Vous allez acheter la cryptomonnaie {direction} de {percentage:.2f}%.")
