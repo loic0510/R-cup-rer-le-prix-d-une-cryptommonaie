@@ -21,11 +21,13 @@ def get_crypto_price(symbol):
 # Demande à l'utilisateur quelle cryptomonnaie il souhaite acheter
 symbol = input("Entrez le symbole de la cryptomonnaie que vous souhaitez acheter (exemple : BTC) : ")
 
-# Demande à l'utilisateur le prix auquel il souhaite acheter la cryptomonnaie
-price = float(input("Entrez le prix auquel vous souhaitez acheter la cryptomonnaie : "))
-
 # Récupère le prix actuel de la cryptomonnaie
 current_price = get_crypto_price(symbol)
+
+print("Son prix est actuellement de " + str(current_price) + ".")
+
+# Demande à l'utilisateur le prix auquel il souhaite acheter la cryptomonnaie
+price = float(input("Entrez le prix auquel vous souhaitez acheter la cryptomonnaie : "))
 
 # Calcul la différence entre le prix souhaité et le prix actuel
 difference = price - current_price
